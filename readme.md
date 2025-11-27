@@ -178,9 +178,9 @@ screenshots/
 
 ## 👨‍💻 Pengembang
 
-Nama: **{{ Syamsul Hidayat & Ratna Eka Harlianti }}**
+Nama: **Syamsul Hidayat & Ratna Eka Harlianti**
 Program Studi: **Teknik Informatika**
-Tempat Magang: **Desa Bumi Dipasena Utama, Kab. Tulang Bawang, Lampung**
+Tempat Magang: **Kantor Desa Bumi Dipasena Utama, Kec. Rawajitu Timus,  Kab. Tulang Bawang, Lampung**
 
 ---
 
