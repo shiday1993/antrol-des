@@ -1,0 +1,4 @@
+flask
+PyJWT
+flask-session
+python-dotenv

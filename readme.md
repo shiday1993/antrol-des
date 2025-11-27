@@ -115,7 +115,8 @@ GRANT ALL PRIVILEGES ON DATABASE antroldb TO antroluser;
 Edit file konfigurasi di:
 
 ```
-config.py
+.env 
+(dalam repo menggunakan .env.example)
 ```
 
 Isi:
@@ -125,6 +126,7 @@ DB_HOST = "localhost"
 DB_NAME = "antroldb"
 DB_USER = "antroluser"
 DB_PASS = "password123"
+API_KEY = "rahasia-key"
 ```
 
 ### Migrate database
@@ -176,7 +178,7 @@ screenshots/
 
 ## 👨‍💻 Pengembang
 
-Nama: **{{ Nama kamu akan ditulis di laporan }}**
+Nama: **{{ Syamsul Hidayat & Ratna Eka Harlianti }}**
 Program Studi: **Teknik Informatika**
 Tempat Magang: **Desa Bumi Dipasena Utama, Kab. Tulang Bawang, Lampung**
 
