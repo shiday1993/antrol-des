@@ -1,24 +1,37 @@
-from flask import Blueprint, request, session, render_template, redirect
-from .response import Respon
-from .config import get_db, is_api, is_api_request
-
+from flask import Blueprint, render_template, request, session, redirect, url_for
+from functools import wraps
 from datetime import datetime, timezone
+from app.backend.response import Respon
+from app.backend.db import get_db
 
-import bcrypt
 import hashlib
+import jwt
+import bcrypt
+import os
 
-bp = Blueprint("login_bp", __name__)
+bp = Blueprint("auth", __name__)
 
-@bp.route('/login', methods=['POST', "GET"])
+SECRET_KEY = os.getenv("API_KEY")
+
+def create_token(data: dict):
+    token = jwt.encode(data, SECRET_KEY, algorithm="HS256")
+    return token
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "user" not in session:
+            return redirect(url_for("auth.login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+@bp.route("/login", methods=["GET", "POST"])
 def login():
-    api = is_api_request()
-    session.permanent = True 
     if request.method == "GET":
         if "user" in session:
-            if api:
-                return Respon.oke("Sudah Login")
             return redirect('/')
-        return render_template('auth/login.html')
+        return render_template('login.html')
  
     try:        
         data = request.json if request.is_json else request.form
@@ -28,9 +41,9 @@ def login():
             return Respon.fail("Username atau password tidak boleh kosong", 400)
         conn, cur = get_db()
         cur.execute("""
-            SELECT id, name, password , development, real_name 
+            SELECT id, username, password , realname 
             FROM users 
-            WHERE name = %s
+            WHERE username = %s
         """, (username,))
         row = cur.fetchone()
         if not row:
@@ -50,24 +63,23 @@ def login():
         
         token = create_token({
             "user_id": row['id'],
-            "name": row['name'],
+            "name": row['username'],
         })
         session['token']= token
-        session['user'] = row['name']
+        session['user'] = row['username']
         session["last_active"] = datetime.now(timezone.utc)
-        if is_api:
-            return Respon.oke({
-                "user": row['name'],
-                "nama": row['real_name'], 
-                "token": token
-            })
-        next_url = session.pop("next_url", None)
-        return redirect(next_url or "/")
-       
+        return Respon.oke( {"token": token, "nama": row['username']})
+    
     except Exception as e:
         return Respon.error(exc=str(e))
 
-@bp.route('/logout')
+@bp.route("/logout")
 def logout():
     session.clear()
-    return Respon.oke(message="Sudah Logout")
+    return redirect(url_for("auth.login"))
+
+@bp.route("/")
+def dashboard():
+    if "user" not in session:
+        return redirect(url_for("auth.login"))
+    return render_template("dashboard.html", user=session.get("user"), title="Antrean Online")

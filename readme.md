@@ -44,7 +44,7 @@ CREATE TABLE loket (
     id SERIAL PRIMARY KEY,
     nama VARCHAR(50) UNIQUE NOT NULL
 );
-````
+```
 
 ### Tabel: `antrean_cs`
 
@@ -55,7 +55,7 @@ CREATE TABLE loket (
 | prefix        | VARCHAR(5)  | Awalan nomor                                 |
 | tanggal       | DATE        | Tanggal antrean                              |
 | status        | VARCHAR(50) | menunggu / sedang dilayani / selesai / batal |
-| loket         | INT         | Loket yang melayani                          |
+| loket         | VARCHAR(50) | Loket yang melayani                          |
 | waktu_panggil | TIMESTAMP   | Waktu dipanggil                              |
 | waktu_selesai | TIMESTAMP   | Waktu selesai                                |
 
@@ -66,9 +66,21 @@ CREATE TABLE antrean_cs (
     prefix VARCHAR(5),
     tanggal DATE NOT NULL,
     status VARCHAR(50) DEFAULT 'menunggu',
-    loket INT REFERENCES loket(id),
+    loket VARCHAR(50),
     waktu_panggil TIMESTAMP NULL,
     waktu_selesai TIMESTAMP NULL
+);
+```
+
+### Tabel: `users`
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    realname VARCHAR(100),
+    password VARCHAR(255) NOT NULL,
+    privilege VARCHAR(20) DEFAULT 'operator',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
@@ -107,9 +119,9 @@ sudo -u postgres psql
 Buat database:
 
 ```sql
-CREATE DATABASE antroldb;
-CREATE USER antroluser WITH ENCRYPTED PASSWORD 'password123';
-GRANT ALL PRIVILEGES ON DATABASE antroldb TO antroluser;
+CREATE DATABASE antrol_desa;
+CREATE USER desa WITH ENCRYPTED PASSWORD 'password123';
+GRANT ALL PRIVILEGES ON DATABASE antrol_desa TO desa;
 ```
 
 Edit file konfigurasi di:
@@ -123,16 +135,16 @@ Isi:
 
 ```python
 DB_HOST = "localhost"
-DB_NAME = "antroldb"
-DB_USER = "antroluser"
-DB_PASS = "password123"
+DB_NAME = "antrol_desa"
+DB_USER = "desa"
+DB_PASS = "desa1234"
 API_KEY = "rahasia-key"
 ```
 
 ### Migrate database
 
 ```bash
-psql -U antroluser -d antroldb -f database.sql
+psql -U desa -d antrol_desa -f database.sql
 ```
 
 ---
@@ -141,6 +153,8 @@ psql -U antroluser -d antroldb -f database.sql
 
 ```bash
 flask run
+#atau 
+python main.py 
 ```
 
 Akses via browser:

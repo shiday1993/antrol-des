@@ -2,3 +2,5 @@ flask
 PyJWT
 flask-session
 python-dotenv
+psycopg2-binary
+bcrypt

@@ -79,7 +79,7 @@ async function listLoket() {
 
 async function tambahLoket() {
   const data = { loket: document.getElementById("loketInput").value };
-  if (!data) return;
+  if (!data.loket) return Swal.fire("", "Perlu input nama loket", 'warning');
   try {
     let res = await fetch("/loket", {
       method: "POST",
@@ -95,7 +95,7 @@ async function tambahLoket() {
       listLoket();
     } else {
       Swal.fire("", result.metaData.message, "info");
-      console.warn("Gagal: " + json.metaData.message);
+      console.warn("Gagal: " + result.metaData.message);
     }
   } catch (err) {
     console.error("Error:", err);
@@ -119,7 +119,7 @@ async function hapusLoket(id) {
       Swal.fire("", "Loket dihapus.", "success");
       listLoket();
     } else {
-      console.warn("Gagal: " + json.metaData.message);
+      console.warn("Gagal: " + result.metaData.message);
     }
   } catch (err) {
     console.error("Error:", err);
@@ -144,18 +144,14 @@ async function updateLoket(id) {
       Swal.fire("", "Update Sukses", "success");
       listLoket();
     } else {
-      console.warn("Gagal: " + json.metaData.message);
+      Swal.fire("Gagal" ,result.metaData.message, 'warning');
     }
   } catch (err) {
     console.error("Error:", err);
   }
 }
 
-// function ubahLoket(i, loket) {
-//   antreanList[i].loket = loket;
-//   simpanData();
 
-// }
 function ubahLoket(i, loket) {
   antreanList[i].loket = loket;
   simpanData();
@@ -180,7 +176,7 @@ function ubahLoket(i, loket) {
 // ------ Handler Antrean Loket CS ----
 async function loadAntrean() {
   try {
-    const res = await fetch("/antreancs/ambil");
+    const res = await fetch("/antrean/ambil");
     const data = await res.json();
 
     // reset antreanList
@@ -298,7 +294,7 @@ async function tambahAntrean() {
   if (!prefix) return Swal.fire("", "Prefix Belum terisi", "info");
 
   try {
-    let res = await fetch("/antreancs/ambil", {
+    let res = await fetch("/antrean/ambil", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prefix }),
@@ -336,7 +332,7 @@ async function panggilAntrean(id, loket) {
 
   // update ke backend
   try {
-    let res = await fetch("/antreancs/update", {
+    let res = await fetch("/antrean/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: a.id, loket: a.loket }),
@@ -346,7 +342,7 @@ async function panggilAntrean(id, loket) {
     loadAntrean();
     // console.log("Update response:", json);
     if (json.metaData.code === 200) {
-      speak(`Nomor antrean ${a.nomor}, silakan menuju ke ${a.loket}`);
+      speak(`Nomor antrean ${a.nomor}, silakan menuju ke loket ${a.loket}`);
     } else {
       Swal.fire("", json.metaData.message, "info");
     }
@@ -361,7 +357,7 @@ async function panggilAntrean(id, loket) {
 async function updateStatusAntrean(id, status) {
   const data = { id: id, status: status };
   try {
-    let res = await fetch("/antreancs/update", {
+    let res = await fetch("/antrean/update", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -378,7 +374,7 @@ function panggilLagi(id) {
   let a = antreanList.find((x) => x.id === id);
   if (!a) return;
   if (a.status === "sedang dilayani") {
-    speak(`Nomor antrean ${a.nomor}, silakan menuju ${a.loket}`);
+    speak(`Nomor antrean ${a.nomor}, silakan menuju ke loket ${a.loket}`);
   } else if (a.status === "dilewati") {
     panggilAntrean(a.id, a.loket);
   }
@@ -400,7 +396,7 @@ function batalAntrean(id) {
   // kirim ke backend
   let a = antreanList.find((x) => x.id === id);
 
-  fetch("/antreancs/selesai", {
+  fetch("/antrean/selesai", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id: id }), // id dikirim via body
@@ -637,17 +633,9 @@ async function getlistTaskId() {
 function konfirmasiSelesaiAntrean(id) {
   Swal.fire({
     title: 'Konfirmasi Selesai Pelayanan',
-    text: `Masukkan kode booking untuk melanjutkan ke poli`,
-    input: 'text',
-    inputPlaceholder: 'Masukkan kode booking...',
     showCancelButton: true,
     confirmButtonText: 'Konfirmasi',
     cancelButtonText: 'Batal',
-    inputValidator: (value) => {
-      if (!value) {
-        return 'Kode booking tidak boleh kosong';
-      }
-    }
   }).then(async (result) => {
     if (result.isConfirmed) {
       Swal.fire({
@@ -655,11 +643,9 @@ function konfirmasiSelesaiAntrean(id) {
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading()
       });
-
-      const kodebooking = result.value;
       try {
-        await selesaiAntrean(id, kodebooking);
-        const msg = 'Selesai Pelayanan Admisi: ' + kodebooking
+        await selesaiAntrean(id);
+        const msg = 'Selesai Pelayanan' 
         Swal.fire('OK', msg, 'success');
         loadAntrean();
       } catch (err) {
@@ -675,15 +661,13 @@ function konfirmasiSelesaiAntrean(id) {
   });
 }
 
-async function selesaiAntrean(id, kodebooking) {
-  const taskid = "3";
+async function selesaiAntrean(id) {
   const now = new Date(); 
   const estimasi = new Date(now.getTime() + 10 * 60 * 1000);
   const waktu = estimasi.getTime();
   console.log('waktu:', waktu)
   try {
-    await UpdateWaktuAntreanKlinik(taskid, waktu, kodebooking);
-    const res = await fetch("/antreancs/selesai", {
+    const res = await fetch("/antrean/selesai", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
