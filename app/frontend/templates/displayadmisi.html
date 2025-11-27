@@ -1,0 +1,281 @@
+$def with()
+$var title = "Display Admisi"
+<!-- 
+<style>
+  body {
+    background-color: #f4f8fb;
+  }
+
+  .current-box {
+    background: linear-gradient(135deg, #004080, #007bff);
+    color: white;
+    border-radius: 20px;
+    padding: 20px;
+    height: 100%;
+    min-height: auto;
+
+  }
+
+  .current-number {
+    font-size: 5rem;
+    font-weight: bold;
+  }
+
+  .current-loket {
+    font-size: 2rem;
+  }
+
+  .queue-card {
+    min-height: 150px auto;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+  }
+
+  .queue-card:hover {
+    transform: scale(1.05);
+  }
+
+  .queue-number {
+    font-size:3.5rem;
+    font-weight: bold;
+    color: #05498d;
+  }
+
+  .queue-loket {
+    font-size: 1.2rem;
+  }
+
+  .running-text {
+    background: #004080;
+    color: white;
+    padding: 10px;
+    font-size: 1.2rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .running-text span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 25s linear infinite;
+  }
+
+    .queue-card {
+      min-height: 200px;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+      margin-top: -25px;
+      /* jika ingin naik ke atas */
+      padding-top: 15px;
+      /* padding normal */
+    }
+  @keyframes marquee {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    100% {
+      transform: translate(-100%, 0);
+    }
+  }
+</style>
+<div class="container-fluid vh-100 d-flex flex-column">
+
+  <div class="row flex-grow-1 mb-3">
+
+    <div class="col-md-6 mb-3 mb-md-0">
+      <div class="current-box d-flex flex-column align-items-center justify-content-center shadow-4-strong">
+        <h2 id="unit-title" class="fw-bold">Antrean Admisi</h2>
+        <div id="current-number" class="current-number">-</div>
+        <div id="current-loket" class="current-loket">-</div>
+        <div class="fst-italic">Sedang Dilayani</div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="h-100 shadow-4-strong rounded-4 overflow-hidden youtube">
+        <iframe width="100%" height="100%" src="" title="YouTube video" frameborder="0"
+          allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  
+   <div class="row " id="queue-list">
+  </div>
+</div>
+
+<div class="running-text">
+  <span>Selamat datang di KL Klinik — Pelayanan kesehatan terbaik untuk Anda dan keluarga.</span>
+</div>
+
+<script src='/static/js/display.js'></script> -->
+
+
+<style>
+  body {
+    background-color: #f4f8fb;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  /* ====== Bagian Sedang Dilayani ====== */
+  .current-box {
+    background: linear-gradient(135deg, #004080, #007bff);
+    color: #fff;
+    border-radius: 20px;
+    padding: 30px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .current-number {
+    font-size: 5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .current-loket {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  .current-box .fst-italic {
+    margin-top: 5px;
+    opacity: 0.9;
+  }
+
+  /* ====== Daftar Antrian ====== */
+  .queue-card {
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+  }
+
+  .queue-card:hover {
+    transform: scale(1.05);
+  }
+
+  .queue-number {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #05498d;
+    margin: 0;
+  }
+
+  .queue-loket {
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  /* ====== Running Text ====== */
+  .running-text {
+    background: #004080;
+    color: white;
+    padding: 10px 0;
+    font-size: 1.1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 999;
+  }
+
+  .running-text span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 25s linear infinite;
+  }
+
+  .main-content .container-fluid {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
+  }
+
+
+  @keyframes marquee {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-50%, 0);
+    }
+    100% {
+      transform: translate(-100%, 0);
+    }
+  }
+
+  /* Responsif tambahan */
+  @media (max-width: 768px) {
+    .current-number {
+      font-size: 3.5rem;
+    }
+
+    .current-loket {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+
+<body class="display-page">
+  <div class="container">
+    <!-- Bagian atas -->
+    <div class="row flex-grow-1 mb-3">
+      <!-- Sedang Dilayani -->
+      <div class="col-md-6 mb-3 mb-md-0">
+        <div class="current-box shadow-4-strong">
+          <h2 id="unit-title" class="fw-bold mb-3">Antrean Admisi</h2>
+          <div id="current-number" class="current-number">-</div>
+          <div id="current-loket" class="current-loket">-</div>
+          <div class="fst-italic">Sedang Dilayani</div>
+        </div>
+      </div>
+
+      <!-- Video YouTube -->
+      <div class="col-md-6">
+        <div class="h-100 rounded-4 overflow-hidden shadow-4-strong youtube">
+          <!-- ganti bagian ini untuk playlist lain
+            src="https://www.youtube.com/embed/videoseries?
+            >> list=PLLan0vKuZodcU9Gewu72g-tnawRFZW9nL << 
+            &autoplay=1&mute=0&loop=1&controls=0&modestbranding=1&rel=0" 
+          -->
+          <iframe width="100%" height="100%" 
+          src="https://www.youtube.com/embed/videoseries?list=PLQ_PIlf6OzqIEvjMOCAZsD21T6xn9QUP6&autoplay=1&mute=0&loop=1&controls=1&modestbranding=1&rel=0"
+          title="" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+          </iframe>
+        
+        </div>
+      </div>
+    </div>
+
+    <!-- Daftar Menunggu -->
+    <div class="row" id="queue-list"></div>
+
+
+    <!-- Running Text -->
+
+  </div>
+  <div class="running-text">
+    <span>Selamat datang di KL Klinik — Pelayanan kesehatan terbaik untuk Anda dan keluarga.</span>
+  </div>
+</body>
+
+<script src="/static/js/display.js"></script>

@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  font-size: large;
+  height: calc(100vh - 10px);
+  background-color: #022d3f;
+  color: #ecf0f1;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar .logo {
+  font-size: 1.8em;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: inherit;
+  padding: 10px 10px;
+  display: block;
+  transition: background 0.2s ease;
+}
+
+.sidebar a:hover {
+  background-color: #34495e;
+  cursor: pointer;
+}
+
+.sidebar a.active {
+  background-color: #001f3b;
+  font-weight: bold;
+}
+
+.sidebar a .icon {
+  margin-right: 10px;
+}
+
+.main-content {
+  margin-top: 65px;
+  margin-left: 280px;
+  padding: 0px auto;
+  flex: 1;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content .login{
+  margin-left: -280px;
+}
+
+.main-content.full {
+  margin-left: 0;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #7f8c8d;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .login .card-wrapper {
+    max-width: 350px;   /* batas lebar */
+    width: 100%;        /* tetap mengikuti col-12 */
+    margin: 0 auto;     /* center */
+  }
+
+  .img {
+    width: 100%;
+    height: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .main-content .login{
+  margin-left: 0;
+}
+
+}
+
+.alert {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.alert.hide {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+#floatingAlert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  /* biar tampil di atas konten lain */
+  max-width: 90%;
+  width: 300px;
+
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#floatingAlert.hide {
+  opacity: 0;
+  transform: translate(-50%, -60%);
+}

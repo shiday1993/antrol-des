@@ -1,0 +1,95 @@
+.pastel-ungu {
+    background-color: #e0bbef;
+    color: #4a148c;
+}
+
+.pastel-biru {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.pastel-hijau {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.pastel-kuning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.pastel-pink {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.pastel-orange {
+    background-color: #ffe5b4;
+    color: #a0522d;
+}
+
+.pastel-abu {
+    background-color: #f0f0f0;
+    color: #333;
+}
+.pastel-hijau {
+    background-color: #d4f8d4c9; 
+    color: #29794c;            
+}
+.pastel-hijau-muda {
+    background-color: #e8fce8; 
+    color: #3a8d3a;
+}
+.judul {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-ungu {
+    background-color: #7B1FA2;  
+    color: #fff;               
+    border: none;           
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.275rem;  
+    cursor: pointer;  
+    transition: background-color 0.2s ease;
+}
+
+.btn-ungu:hover {
+    background-color: #6A1B9A;
+    color: white; 
+}
+.btn-ungu:focus,
+.btn-ungu:active {
+    outline: none;          
+    box-shadow: none;       
+    background-color: #6A1B9A;
+    color: white;  
+}
+
+.card.pastel-ungu,
+.card.pastel-biru,
+.card.pastel-hijau,
+.card.pastel-kuning,
+.card.pastel-pink,
+.card.pastel-orange,
+.card.pastel-abu {
+    padding: 1rem;
+    min-height: 100px;
+    height: auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.box-shadow {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}

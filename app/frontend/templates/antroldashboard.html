@@ -1,0 +1,85 @@
+$def with()
+$var title = "Antrean Admisi"
+<input type="hidden" id="user" name="user" value="$:s.get('u','')" />
+<div class="d-none konten" id="dashboard-admisi">
+  <h2><strong>Dashboard Antrean Admisi</strong></h2>
+  <hr class="mx-n3">
+  <div class="container-fluid">
+    <div class="row mb-3">
+      <div class="col-md-12 col-12 mt-2">
+
+        <div class="card">
+          <div class="card-body">
+
+            <!-- Loket -->
+            <h4>Tambah Loket</h4>
+            <div class="mb-3 d-flex gap-2">
+              <input id="loketInput" type="text" class="form-control w-auto" placeholder="Nama Loket">
+              <button class="btn btn-primary" onclick="tambahLoket()">Tambah Loket</button>
+            </div>
+            <div class="col-12 col-md-6 mt-3">
+              <div class="table-responsive ">
+                <table class="table table-sm table-bordered table-hover" id="tabel-loket">
+                  <thead class="table-info align-top">
+                    <tr>
+                       <th style="width:10%">No</th>
+                      <th style="width:30%">Nama</th>
+                      <th style="width:60%">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <hr>
+
+            <!-- Tambah Antrian -->
+            <h4>Tambah Antrean</h4>
+            <div class="mb-3 d-flex gap-2">
+              <!-- input dengan suggestion -->
+              <input id="prefixInput" class="form-control w-auto" list="prefixList"
+                placeholder="Masukkan prefix (misal A/B/C)">
+
+              <!-- suggestion -->
+              <datalist id="prefixList">
+                <option value="A"></option>
+                <option value="B"></option>
+                <option value="C"></option>
+                <option value="D"></option>
+              </datalist>
+
+              <button class="btn btn-primary" onclick="tambahAntrean()">Tambah Antrean</button>
+              <button class="btn btn-danger" onclick="resetSemua()">Reset Antrean</button>
+            </div>
+
+            <!-- Daftar Antrian -->
+            <h4 class="text-center">Daftar Antrean</h4>
+            <div class="container mt-3">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="tabel-antrean">
+                  <thead class="table-info align-top">
+                    <tr>
+                      <th>No</th>
+                      <th>Nomor Antrean</th>
+                      <th>Loket</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                      <th>Timer</th>
+                      <th>Cetak</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script >
+    $$(document).ready(function () {tampilkan('#dashboard-admisi');});
+</script>
+<script src="/static/js/antreandanloket.js"></script>

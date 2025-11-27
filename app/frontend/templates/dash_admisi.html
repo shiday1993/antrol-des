@@ -1,0 +1,457 @@
+$def with()
+$var title = 'Antrean Online'
+
+<!--  -->
+
+<div class="d-none konten" id="dash_poli">
+    <h2><strong>Dashboard</strong></h2>
+    <p>
+    <h5>Antrean FKRTL</h5>
+    </p>
+    <hr class="mx-n3">
+
+    <div class="row mb-3">
+        <div class="col-md-12 col-12 mt-3">
+            <div class="container shadow p-3">
+                <form id="dash_tanggal">
+                    <div class="d-flex align-items-between justify-content-center gap-2  mb-3">
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text fw-bold border-0">Pilih Tanggal</span>
+                                <input type="date" class="form-control rounded" id="tanggal_dashboard"
+                                    name="tanggal_dashboard" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-success fw-bold" onclick="antreantanggal()">
+                                <i class="fas fa-search me-2"></i> Cari
+                            </button>
+                            <button type="button" class="btn btn-info ms-2" onclick="excel_dash_antrean()">
+                                <i class="fas fa-file-excel me-2"></i>Excel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="container mt-3">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-hover" id="tabel-antrean">
+                            <thead class="table-info align-top">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Pasien</th>
+                                    <th>Poli</th>
+                                    <th>Dokter/Bidan</th>
+                                    <th>Peserta</th>
+                                    <th>Kode Booking</th>
+                                    <th>Nomor</th>
+                                    <th>Jam Daftar (WIB)</th>
+                                    <th>Jam Panggil (WIB)</th>
+                                    <th>Status</th>
+                                    <th>Sumber</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="13" class="text-center">Tidak ada data.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--  -->
+<div class="d-none konten" id="dash_farmasi">
+    <h2><strong>Dashboard Loket</strong></h2>
+    <p><h5>Antrean FKRTL</h5></p>
+    <hr class="mx-n3">
+
+    <div class="row mb-3">
+        <div class="col-md-12 col-12 mt-3">
+            <div class="container shadow p-3">
+                <form id="">
+                    <div class="d-flex align-items-between justify-content-center gap-2  mb-3">
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text fw-bold border-0">Pilih Tanggal</span>
+                                <input type="date" class="form-control rounded" id="tanggal_farmasi"
+                                    name="tanggal_farmasi" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-success fw-bold" onclick="antreantanggal()">
+                                <i class="fas fa-search me-2"></i> Cari
+                            </button>
+                            <button type="button" class="btn btn-info ms-2" onclick="excel_dash_farmasi()">
+                                <i class="fas fa-file-excel me-2"></i>Excel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="container mt-3">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-hover" id="tabel-farmasi">
+                            <thead class="table-info align-top">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Tipe Loket</th>
+                                    <th>Nama Loket</th>
+                                    <th>Nomor</th>
+                                    <th>Jam Daftar (WIB)</th>
+                                    <th>Jam Panggil (WIB)</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                    <th>Checkin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="9" class="text-center">Tidak ada data.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--  -->
+<div class="d-none konten bg-light" id="dash_update_dokter">
+    <div class="container">
+        <h3>Update Jadwal Dokter</h3>
+    </div>
+    <hr class="mx-n3">
+
+    <div class="row mb-3">
+        <div class="col-md-12 col-12 mt-3">
+            <div class="container shadow p-3">
+                <div id="dataDokter" class="container">
+                    <div class="container">
+                        <h4>Daftar Dokter</h4>
+                        <div class="row">
+                            <div class="col-6 col-md-3 mb-2">
+                                <select class="form-select" id="pilih_poli_data">
+                                    <option value="">-- Pilih Poli --</option>
+                                </select>
+                            </div>
+                             <div class="col-6 col-md-3 mb-2">
+                                <input type="date" class="form-control" id="pilih_tanggal_data"/>
+                            </div>
+                            <div class="col-6 col-md-3 mb-2">
+                                <button type="button" class="btn btn-info" onclick="cariDataDokter()">
+                                    <i class="fas fa-search me-2"></i>Cari
+                                </button>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm table-bordered ">
+                            <thead class="table-info">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Nama Dokter</th>
+                                    <th>Poli</th>
+                                    <th>Subspesialis</th>
+                                    <th>Kode Subspesialis</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dokterList">
+                                <tr>
+                                    <td colspan="5" class="text-center">Belum ada data.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="formJadwalDokter" class="d-none container mt-4">
+                        <h5>Update Jadwal: <span id="namaDokterJadwal"></span></h5>
+                        <input type="hidden" id="kodeDokterJadwal" />
+                        <input type="hidden" id="kodePoliJadwal" />
+                        <input type="hidden" id="kodeSubspesialisJadwal" />
+
+                        <!-- Tabel Jadwal sama seperti sebelumnya -->
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm table-bordered table-hover" id="jadwalDokter">
+                                <thead class="table-info align-top">
+                                    <tr>
+                                        <th>Hari</th>
+                                        <th>Poli</th>
+                                        <th>Jadwal Praktek</th>
+                                        <th>Kapasitas Pasien</th>
+                                        <th>Jam Buka</th>
+                                        <th>Jam Tutup</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4" class="text-center">Belum ada data.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-success btn-sm" onclick="tambahBarisJadwal()">+
+                                Tambah</button>
+                            <button type="button" class="btn btn-warning btn-sm" onclick="updateDokter()">Update Jadwal</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                onclick="tutupFormJadwal()">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary mt-2 mb-2 "
+                onclick="batal()">
+                    <i class="fas fa-arrow-rotate-left fa-lg me-2"></i>Kembali
+                </button>
+            </div>
+          
+        </div> 
+    </div>
+</div>
+
+<!--  -->
+<div class="d-none konten bg-light" id="dash_tampilan">
+
+    <div class="text-center mb-3">
+        <h3 class="fw-bold">FASKES TINGKAT LANJUT</h3>
+    </div>
+    <hr class="mx-n3">
+    <div class="row">
+        <div class="col-md-8 col-8 text-start">
+            <h5>Administrator</h5>
+        </div>
+        <div class="col-md-4 col-4 text-end">
+            <h5 id="jamRealtime"></h5>
+        </div>
+    </div>
+    <hr class="mx-n3">
+    <div class="row justify-content-center align-items-between g-3">
+        <!-- Panel Antrean Utama -->
+        <div class="col-lg-8 col-md-8 col-12 mt-3">
+            <div class="card box-shadow">
+                <div class="card-header bg-success">
+                    <h5 class="text-center text-white fw-bold" id="jampraktek_tampilan">
+                        MATA - dr. Kelvin Alim, Sp.M (10:00 - 13:00)
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="display-1 fw-bold" id="nomor_tampilan">1</div>
+                    <h5 class="mt-3 mb-1" id="poli_tampilan">MATA 1</h5>
+                    <h5 class="fw-bold" id="dokter_tampilan">dr. Kelvin Alim, Sp.M</h5>
+                    <hr class="mx-n3">
+                    <h5 class="text-uppercase " id="peserta_tampilan">Riza Fahroni SE.MM</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Info Kanan -->
+        <div class="col-lg-4 col-md-4 col-12 mt-3">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-6">
+                    <div class="card text-white bg-primary mb-3 box-shadow text-center">
+                        <div class="card-body">
+                            <div class="display-3 fw-bold mb-3" id="sisa_tampilan">1</div>
+                            <div class="h6 fw-bold">SISA ANTREAN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-6">
+                    <div class="card text-white bg-warning box-shadow text-center">
+                        <div class="card-body">
+                            <div class="display-3 fw-bold mb-3" id="total_tampilan">2</div>
+                            <div class="h6 fw-bold">TOTAL ANTREAN</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-none konten" id="formPesertaBPJS">
+    <input type="hidden" id="pasienLama" value="1"/>
+    <div class="col bg-white shadow-sm">
+        <div class="col-12 col-md-12 p-2">
+            <div class="bpjs d-none mb-3">
+                <h4 ><b>PESERTA BPJS</b></h4>
+            </div>
+            <div class="umum d-none mb-3">
+                <h4 ><b>PESERTA UMUM</b></h4>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="kartu" id="nik" value="nik" />
+                    <label class="form-check-label fw-bold" for="nik">NIK (eKTP)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="kartu" id="noka" value="noka" checked/>
+                    <label class="form-check-label fw-bold" for="noka">No. BPJS</label>
+                </div>
+            </div>
+            <div class="tampil mb-3" id="formBPJS">
+                <div class="col justify-content-center">
+                    <div class="col-12 col-md-6 ">
+                        <input type="hidden" id="jnsPasienBPJS" value="JKN"/>
+                        <div class="input-group mb-3">
+                             <div class="form-outline" data-mdb-input-init>
+                                <input type="text"   placeholder="Nomor Kartu BPJS"
+                                id="nokartu_bpjs" class="form-control" />
+                                <label class="form-label " for="nokartu_bpjs">Nomor Kartu BPJS</label>
+                            </div>
+                            <span class="input-group-text">
+                                <a role="button" ><i class="fas fa-keyboard fa-lg"></i></a>
+                            </span>
+                            <span class="input-group-text">
+                                <a role="button" onclick="cariDataRujukan()">
+                                    <i class="fas fa-search fa-lg"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 ">
+                        <div class="input-group  mb-3">
+                            <div class="form-outline" data-mdb-input-init>
+                                <input type="text"   placeholder="Nomor Rujukan"
+                                id="norujukan_bpjs" class="form-control " />
+                                <label class="form-label " for="norujukan_bpjs">Nomor Rujukan</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 ">
+                        <div class="col">
+                            <select class="form-select select" id="pilihDokter_bpjs">
+                                <option value="">-- Pilih Dokter --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary" onclick="add_AntreanBPJS()">Simpan</button>
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+            <div class="tampil mb-3" id="formUMUM">
+                <div class="col justify-content-center">
+                   <div class="col-12 col-md-6 ">
+                        <input type="hidden" id="jnsPasienUmum" value="NON JKN"/>
+                        <div class="input-group input-group-lg mb-3">
+                             <div class="form-outline" data-mdb-input-init>
+                                <input type="text"   placeholder="Nomor KTP / NIK"
+                                id="no_nik" class="form-control" />
+                                <label class="form-label " for="no_nik">Nomor KTP / NIK</label>
+                            </div>
+                            <span class="input-group-text">
+                                <a role="button" ><i class="fas fa-keyboard fa-lg"></i></a>
+                            </span>
+                            <span class="input-group-text">
+                                <a role="button" ><i class="fas fa-search fa-lg"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                  
+                    <div class="col-12 col-md-3 ">
+                        <div class="col">
+                            <select class="form-select select" id="pilihDokter_nik">
+                                <option value="">-- Pilih Dokter --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="col-12 col-md-12 mb-3" >
+                <div class="row">
+                    <div class="col-8 col-md-9 mb-3">
+                        <h6><span>*</span>NIK harus 16 digit.</h6>
+                        <h6><span>*</span>No. Peserta harus 13 digit.</h6>
+                    </div>
+                    <div class="col-4 col-md-3 mb-3">
+                        <button class="btn btn-sm btn-secondary" onclick="batal()">KEMBALI</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+</div>
+
+
+<div class="d-none konten" id="formFarmasi">
+    disini formfarmasi
+  <!-- di sini isi form seperti gambar -->
+  <!-- radio NIK/No Kartu, input, dan dropdown dokter -->
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="dataRujukan" tabindex="-1" aria-labelledby="dataRujukanLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <h4 class="modal-title " id="dataRujukanLabel">Check In</h4>
+                <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+                    aria-label="Close"></button>
+            </div> -->
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-border table-hover table-stripped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <th class="text-center" colspan="3" id="nomorRujukan_bpjs">-</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hasilCariRujukan">
+                            <tr>
+                                <th style="width: 25%">Jenis Rujukan</th>
+                                <td>: </td>
+                                <td id="jnsrujukan_bpjs">-</td>
+                            </tr>
+                            <tr>
+                                <th>Nama RS </th>
+                                <td>: </td>
+                                <td id="namars_bpjs">-</td>
+                            </tr>
+                            <tr>
+                                <th>Tgl. Rujukan</th>
+                                <td>: </td>
+                                <td id="tglRujukan_bpjs">-</td>
+                            </tr>
+                             <tr>
+                                <th>Poli</th>
+                                <td>: </td>
+                                <td id="detailpoli_bpjs">-</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-center" >
+                                    <a role="button"  class="btn btn-primary" onclick="pilihPeserta()">Pilih</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="/static/js/dash_antrean.js"></script>
