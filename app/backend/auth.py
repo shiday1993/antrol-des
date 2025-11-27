@@ -21,6 +21,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if "user" not in session:
+            session.clear()
             return redirect(url_for("auth.login"))
         return f(*args, **kwargs)
     return decorated_function
@@ -79,7 +80,6 @@ def logout():
     return redirect(url_for("auth.login"))
 
 @bp.route("/")
+@login_required
 def dashboard():
-    if "user" not in session:
-        return redirect(url_for("auth.login"))
     return render_template("dashboard.html", user=session.get("user"), title="Antrean Online")

@@ -20,12 +20,8 @@
   <header class="topbar">
     <nav class="navbar fixed-top bg-primary bg-gradient navbar-dark shadow-sm ps-3">
         <div class="container-fluid justify-content-center align-items-center">
-            <a class="navbar-brand d-flex align-items-center toggle-btn" id="sidebarToggle" role="button">
-                <img src="#/static/img/sistem-icon-white.png" class="logo-small" alt="Logo" height="35" />
-                <img src="#/static/img/sistem-putih.png" class="logo-big" alt="Logo Full" height="25" />
-                <span class="toggle-btn" aria-label="Toggle sidebar">
-                    ☰
-                </span>
+            <a class="navbar-brand d-flex align-items-center toggle-btn" id="sidebarToggle" role="button" href='/'>
+                <img src="#/static/img/sistem-putih.png" class="logo-big" alt="Logo" height="25" />
             </a>
 
             <ul class="navbar-nav ms-auto me-3">
@@ -38,6 +34,9 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li>
+                             <a class="dropdown-item fw-bold" href="/display" role="button">
+                             <i class="fas fa-tv me-2"></i>Display Antrean
+                            </a>
                             <a class="dropdown-item text-danger fw-bold" href="/logout" role="button" id="logoutBtn">
                                 <i class="fas fa-right-from-bracket me-2"></i>Logout
                             </a>

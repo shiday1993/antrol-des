@@ -100,7 +100,6 @@ def panggil_antrean():
     )
     conn.commit()
 
-    # ambil ulang data terbaru
     cur.execute("SELECT * FROM antrean_cs WHERE id=%s", (antrean_id,))
     new = cur.fetchone()
     if new:

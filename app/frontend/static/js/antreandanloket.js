@@ -156,11 +156,9 @@ function ubahLoket(i, loket) {
   antreanList[i].loket = loket;
   simpanData();
 
-  // render ulang kolom aksi di baris ini
   const row = document.querySelector("#tabel-antrean tbody").children[i];
   if (!row) return;
 
-  // bikin ulang busyLoket + firstIndexByLoket biar konsisten
   const busyLoket = new Set(
     antreanList
       .filter((a) => a.status === "sedang dilayani" && a.loket)
@@ -179,10 +177,8 @@ async function loadAntrean() {
     const res = await fetch("/antrean/ambil");
     const data = await res.json();
 
-    // reset antreanList
     antreanList = [];
     saveSession("antreanList", data.response.antrean);
-    // isi antrean
     const listAntrean = Array.isArray(data.response.antrean)
       ? data.response.antrean
       : [];
@@ -205,7 +201,6 @@ async function loadAntrean() {
       return;
     }
 
-    // sort nomor antrean biar urut
     antreanList.sort((a, b) => {
       const na = parseInt(a.nomor.replace(/\D/g, "")) || 0;
       const nb = parseInt(b.nomor.replace(/\D/g, "")) || 0;
@@ -247,7 +242,6 @@ async function loadAntrean() {
 
       const start = a.waktu_panggil ? new Date(a.waktu_panggil) : null;
       let timerText = `<span id="timer-${a.nomor}">00:00:00</span>`;
-      // hanya tampil & jalan kalau status sedang dilayani
       if (start && a.status === "sedang dilayani") {
         timerText = `<span id="timer-${a.nomor}">${formatDurasi(
           Date.now() - start
@@ -260,7 +254,7 @@ async function loadAntrean() {
           }, 1000);
         }
       } else {
-        deleteTimer(a); // fungsi yang tadi kamu bikin
+        deleteTimer(a); 
       }
 
       const cetak = `<button class="btn btn-sm btn-secondary" data-cetak=${a.id} onclick="cetakAntrean(${a.id})">Cetak</button>`;
@@ -276,7 +270,6 @@ async function loadAntrean() {
             `;
       tbody.appendChild(tr);
 
-      // kelola timer sesuai status
       if (a.status === "sedang dilayani" && start) {
         startTimer(a);
       } else {
@@ -312,7 +305,6 @@ async function tambahAntrean() {
 
 async function panggilAntrean(id, loket) {
   if (!loket) return Swal.fire("", "Silahkan pilih loket.", "info");
-  // cari antrean berdasarkan id
   let a = antreanList.find((x) => x.id === id);
   if (!a) {
     console.error("Antrean tidak ditemukan untuk id:", id);
@@ -327,10 +319,9 @@ async function panggilAntrean(id, loket) {
   if (a.waktu_panggil) {
     startTimer(a);
   } else {
-    stopTimer(a); // jaga2 kalau sebelumnya nyala
+    stopTimer(a); 
   }
 
-  // update ke backend
   try {
     let res = await fetch("/antrean/update", {
       method: "POST",
@@ -351,7 +342,6 @@ async function panggilAntrean(id, loket) {
   }
 }
 
-// polling setiap 3 detik supaya semua user sinkron
 // setInterval(listantrean, 3000);
 
 async function updateStatusAntrean(id, status) {
@@ -389,17 +379,16 @@ function lewatiAntrean(id) {
     delete timers[a.nomor];
   }
   simpanData();
-  updateStatusAntrean(a.id, a.status); // pakai id
+  updateStatusAntrean(a.id, a.status);
 }
 
 function batalAntrean(id) {
-  // kirim ke backend
   let a = antreanList.find((x) => x.id === id);
 
   fetch("/antrean/selesai", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id: id }), // id dikirim via body
+    body: JSON.stringify({ id: id }), 
   })
     .then((res) => res.json())
     .then((res) => {
@@ -414,15 +403,13 @@ function batalAntrean(id) {
 function getAksiHTML(a, i, busyLoket, firstIndexByLoket) {
   let aksi = "";
   if (a.status === "menunggu") {
-    // jika belum pilih loket tampilkan pesan pilih
     if (!a.loket) {
       aksi = `<span class="badge bg-secondary">Pilih Loket</span>`;
     }
-    // jika loket sedang dilayani, tetap menunggu (tidak boleh panggil)
     else if (busyLoket.has(a.loket)) {
       aksi = `<span class="badge bg-secondary">Menunggu</span>`;
     }
-    // jika loket tidak sibuk dan ini adalah antrian pertama Menunggu untuk loket tsb => tombol Panggil
+  
     else if (firstIndexByLoket[a.loket] === undefined) {
       firstIndexByLoket[a.loket] = i;
       aksi = `<button class="btn btn-sm btn-success" onclick="panggilAntrean(${a.id}, '${a.loket}')">Panggil</button>`;
@@ -430,12 +417,6 @@ function getAksiHTML(a, i, busyLoket, firstIndexByLoket) {
       aksi = `<span class="badge bg-secondary">Menunggu</span>`;
     }
   } else if (a.status === "sedang dilayani") {
-    // aksi = `
-    //     <button class="btn btn-sm btn-info" onclick="selesaiAntrean(${a.id})">Selesai</button>
-    //     <button class="btn btn-sm btn-warning" onclick="lewatiAntrean(${a.id})">Lewati</button>
-    //     <button class="btn btn-sm btn-danger" onclick="batalAntrean(${a.id})">Batal</button>
-    //     <button class="btn btn-sm btn-success" onclick="panggilLagi(${a.id})">Panggil Lagi</button>
-    //   `;
     aksi = `
         <button class="btn btn-sm btn-info" onclick="konfirmasiSelesaiAntrean(${a.id})">Selesai</button>
         <button class="btn btn-sm btn-warning" onclick="lewatiAntrean(${a.id})">Lewati</button>
@@ -482,12 +463,8 @@ function stopTimer(a) {
   }
 }
 
-// --- Init: render + restore timers untuk yang masih "Sedang Dilayani" ---
-
 function cetakAntrean(id) {
   const antreanList = getSession("antreanList");
-
-  // cari antrean yg id-nya sesuai
   const antre = antreanList.find((x) => x.id === id);
   if (!antre) {
     alert("Data antrean tidak ditemukan!");
@@ -543,7 +520,7 @@ function cetakAntrean(id) {
         </style>
       </head>
        <body>
-            <h2><strong>KL KLINIK</strong></h2>
+            <h2><strong>=== ANTROL-DES ===</strong></h2>
             <div class="line"></div>
             <p>Nomor Antrean</p>
             <h1>${nomor}</h1>
@@ -581,7 +558,6 @@ function formatDurasi(ms) {
   return `${h}:${m}:${s}`;
 }
 
-// --- handler lain ---
 function getTotalAntrean() {
   const antreanList = getSession("antreanList") || [];
   return antreanList.filter((a) => a.status !== "selesai").length;
@@ -589,7 +565,6 @@ function getTotalAntrean() {
 
 function getWaktuTunggu(nomor) {
   const antreanList = getSession("antreanList") || [];
-  // urutkan sesuai antrean
   const sorted = [...antreanList].sort((a, b) =>
     a.nomor.localeCompare(b.nomor)
   );
@@ -597,38 +572,11 @@ function getWaktuTunggu(nomor) {
 
   if (index === -1) return "-";
 
-  const rataMenit = 5; // rata-rata 5 menit per pasien
+  const rataMenit = 5; 
   const estimasi = index * rataMenit;
   return `${estimasi} menit`;
 }
 
-async function getlistTaskId() {
-  const kodebooking = $("#kodebooking_cek").val() || '';
-  const payload = { kodebooking: kodebooking };
-  const url = "get_listtask";
-  const method = "get";
-  antrol_rs(url, method, payload, function (err, res) {
-    if (err) {
-      Swal.close();
-      Swal.fire("Server Error", "Internal Server Error", "error");
-      if (callback) callback();
-      return;
-    }
-    const meta = res.metadata || res.metaData || {};
-    const { code, message } = meta;
-    let hasil;
-    if (code === 200) {
-      hasil = res.response;
-    } else {
-      Swal.fire("", message || "Terjadi kesalahan", "warning");
-      if (callback) callback();
-      return;
-    }
-    console.log("taskid list : ", hasil);
-    saveSession("taskid list : ", hasil);
-    if (callback) callback();
-  });
-}
 
 function konfirmasiSelesaiAntrean(id) {
   Swal.fire({
@@ -638,11 +586,6 @@ function konfirmasiSelesaiAntrean(id) {
     cancelButtonText: 'Batal',
   }).then(async (result) => {
     if (result.isConfirmed) {
-      Swal.fire({
-        title: 'Cek kode booking...',
-        allowOutsideClick: false,
-        didOpen: () => Swal.showLoading()
-      });
       try {
         await selesaiAntrean(id);
         const msg = 'Selesai Pelayanan' 
@@ -683,53 +626,4 @@ async function selesaiAntrean(id) {
     console.error("Gagal di selesaiAntrean:", err);
     throw err; 
   }
-}
-async function UpdateWaktuAntreanKlinik(taskid, waktu, kodebooking) {
-  const jenisresep = '';
-  data ={ kodebooking: kodebooking, taskid: taskid, waktu: waktu , jenisresep: jenisresep}
-  try {
-    const res = await fetch("/antrol/antrean/update", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    const json = await res.json();
-    const code = json?.metaData?.code;
-    const msg = json?.metaData?.message || 'Gagal update waktu antrean';
-
-    if (code !== 200) {
-      throw new Error(msg);
-    }
-    
-    // const { ok: bpjsOk, msg: bpjsMsg } = await UpdateWaktuAntreanBpjs(kodebooking, taskid, waktu, jenisresep);
-    // if (!bpjsOk) {
-    //   throw new Error(bpjsMsg);
-    // }
-    // console.log("Update BPJS:", json);
-    return true;
-  } catch (err) {
-    console.error("Error update backend:", err);
-    throw err;
-  }
-}
-
-
-// Fungsi Update Waktu antrean ke BPJS
-async function UpdateWaktuAntreanBpjs(kodebooking, taskid, waktu, jenisresep) {
-  return new Promise((resolve) => {
-    antrol_rs("antrean_update", "post", { kodebooking, taskid, waktu, jenisresep }, (err, res) => {
-      if (err) return resolve({ ok: false, msg: 'Gagal koneksi ke server BPJS' });
-
-      const meta = res.metaData || res.metadata || {};
-      const code = parseInt(meta.code);
-      const msg = meta.message || 'Tidak diketahui';
-
-      if (code === 200) {
-        resolve({ ok: true, msg });
-      } else {
-        resolve({ ok: false, msg });
-      }
-    });
-  });
 }
