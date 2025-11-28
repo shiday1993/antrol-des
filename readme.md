@@ -120,7 +120,7 @@ Buat database:
 
 ```sql
 CREATE DATABASE antrol_desa;
-CREATE USER desa WITH ENCRYPTED PASSWORD 'password123';
+CREATE USER desa WITH ENCRYPTED PASSWORD 'desa1234';
 GRANT ALL PRIVILEGES ON DATABASE antrol_desa TO desa;
 ```
 
