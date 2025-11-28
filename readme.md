@@ -83,7 +83,10 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
-
+### Insert data users
+```sql
+insert into users (username, password, realname) values('admin', md5('admin1234'), 'Administrator');
+```
 ---
 
 ## Konfigurasi & Instalasi
