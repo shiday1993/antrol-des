@@ -180,22 +180,11 @@ http://localhost:5000
 
 ---
 
-## 🖼 Screenshot
-
-> Contoh:
-```
-screenshots/
-├── login.png
-├── dashboard.png
-├── display.png
-```
----
-
-## 👨‍💻 Pengembang
+## Pengembang
 
 Nama: **Syamsul Hidayat & Ratna Eka Harlianti**
 Program Studi: **Teknik Informatika**
-Tempat Magang: **Kantor Desa Bumi Dipasena Utama, Kec. Rawajitu Timus,  Kab. Tulang Bawang, Lampung**
+Tempat Magang: **Kantor Desa Bumi Dipasena Utama, Kec. Rawajitu Timur,  Kab. Tulang Bawang, Lampung**
 
 ---
 
