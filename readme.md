@@ -1,5 +1,3 @@
-## README.md — *ANTROL-DES*
-
 # ANTROL-DES
 Digitalisasi Pelayanan Publik Desa – Sistem Antrean Pelayanan Administrasi Berbasis Web
 
